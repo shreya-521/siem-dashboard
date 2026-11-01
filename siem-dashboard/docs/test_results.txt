@@ -1,0 +1,58 @@
+test_alert_detail_and_404 (tests.test_integration.DashboardTests.test_alert_detail_and_404) ... ok
+test_api_stats (tests.test_integration.DashboardTests.test_api_stats) ... ok
+test_dashboard_renders (tests.test_integration.DashboardTests.test_dashboard_renders) ... ok
+test_filter_by_severity (tests.test_integration.DashboardTests.test_filter_by_severity) ... ok
+test_incident_pages_and_report_download (tests.test_integration.DashboardTests.test_incident_pages_and_report_download) ... ok
+test_log_content_is_html_escaped (tests.test_integration.DashboardTests.test_log_content_is_html_escaped)
+A malicious log line must not become live HTML in the dashboard (stored XSS check). ... ok
+test_reanalyse_endpoint (tests.test_integration.DashboardTests.test_reanalyse_endpoint) ... ok
+test_search_filter (tests.test_integration.DashboardTests.test_search_filter) ... ok
+test_status_update (tests.test_integration.DashboardTests.test_status_update) ... ok
+test_analysis_is_idempotent (tests.test_integration.PipelineTests.test_analysis_is_idempotent) ... ok
+test_evidence_links_resolve_to_real_events (tests.test_integration.PipelineTests.test_evidence_links_resolve_to_real_events) ... ok
+test_generator_is_deterministic (tests.test_integration.PipelineTests.test_generator_is_deterministic) ... ok
+test_malformed_lines_skipped_not_crashing (tests.test_integration.PipelineTests.test_malformed_lines_skipped_not_crashing) ... ok
+test_multi_stage_attacker_found (tests.test_integration.PipelineTests.test_multi_stage_attacker_found) ... ok
+test_no_false_positives_on_decoys (tests.test_integration.PipelineTests.test_no_false_positives_on_decoys) ... ok
+test_only_one_critical (tests.test_integration.PipelineTests.test_only_one_critical) ... ok
+test_single_stage_scenarios (tests.test_integration.PipelineTests.test_single_stage_scenarios) ... ok
+test_auth_line (tests.test_parser.ParserTests.test_auth_line) ... ok
+test_firewall_line (tests.test_parser.ParserTests.test_firewall_line) ... ok
+test_malformed_lines_return_none (tests.test_parser.ParserTests.test_malformed_lines_return_none) ... ok
+test_parse_lines_counts_skipped (tests.test_parser.ParserTests.test_parse_lines_counts_skipped) ... ok
+test_web_line (tests.test_parser.ParserTests.test_web_line) ... ok
+test_below_threshold_is_silent (tests.test_rules.BruteForceTests.test_below_threshold_is_silent) ... ok
+test_different_ips_not_mixed (tests.test_rules.BruteForceTests.test_different_ips_not_mixed) ... ok
+test_fires_at_threshold (tests.test_rules.BruteForceTests.test_fires_at_threshold) ... ok
+test_long_attack_is_one_alert (tests.test_rules.BruteForceTests.test_long_attack_is_one_alert) ... ok
+test_outside_window_is_silent (tests.test_rules.BruteForceTests.test_outside_window_is_silent) ... ok
+test_successes_ignored (tests.test_rules.BruteForceTests.test_successes_ignored) ... ok
+test_two_separate_bursts (tests.test_rules.BruteForceTests.test_two_separate_bursts) ... ok
+test_old_failures_expire (tests.test_rules.CompromiseTests.test_old_failures_expire) ... ok
+test_other_ip_success_ignored (tests.test_rules.CompromiseTests.test_other_ip_success_ignored) ... ok
+test_success_after_failures (tests.test_rules.CompromiseTests.test_success_after_failures) ... ok
+test_typo_does_not_alert (tests.test_rules.CompromiseTests.test_typo_does_not_alert) ... ok
+test_full_chain_is_critical (tests.test_rules.MultiStageTests.test_full_chain_is_critical) ... ok
+test_missing_compromise_no_multi_stage (tests.test_rules.MultiStageTests.test_missing_compromise_no_multi_stage) ... ok
+test_missing_scan_no_multi_stage (tests.test_rules.MultiStageTests.test_missing_scan_no_multi_stage) ... ok
+test_stages_from_different_ips_not_correlated (tests.test_rules.MultiStageTests.test_stages_from_different_ips_not_correlated) ... ok
+test_stages_too_far_apart (tests.test_rules.MultiStageTests.test_stages_too_far_apart) ... ok
+test_boundaries (tests.test_rules.OffHoursTests.test_boundaries) ... ok
+test_internal_scores_lower (tests.test_rules.OffHoursTests.test_internal_scores_lower) ... ok
+test_night_admin_login (tests.test_rules.OffHoursTests.test_night_admin_login) ... ok
+test_normal_user_ignored (tests.test_rules.OffHoursTests.test_normal_user_ignored) ... ok
+test_working_hours_ok (tests.test_rules.OffHoursTests.test_working_hours_ok) ... ok
+test_nine_ports_is_silent (tests.test_rules.PortScanTests.test_nine_ports_is_silent) ... ok
+test_repeated_same_port_is_not_scan (tests.test_rules.PortScanTests.test_repeated_same_port_is_not_scan) ... ok
+test_scan_detected (tests.test_rules.PortScanTests.test_scan_detected) ... ok
+test_slow_scan_is_silent (tests.test_rules.PortScanTests.test_slow_scan_is_silent) ... ok
+test_internal_detection (tests.test_rules.SeverityTests.test_internal_detection) ... ok
+test_labels (tests.test_rules.SeverityTests.test_labels) ... ok
+test_benign_paths (tests.test_rules.WebAttackTests.test_benign_paths) ... ok
+test_sqli_detected_even_when_url_encoded (tests.test_rules.WebAttackTests.test_sqli_detected_even_when_url_encoded) ... ok
+test_traversal_and_xss (tests.test_rules.WebAttackTests.test_traversal_and_xss) ... ok
+
+----------------------------------------------------------------------
+Ran 52 tests in 0.131s
+
+OK

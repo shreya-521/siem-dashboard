@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+data/siem.db
+data/logs/
+.venv/

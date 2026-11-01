@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Event Correlation{% endblock %} · SOC Console</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header class="top">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="dot"></span>SOC<b>/</b>CORRELATE</a>
+  <nav>
+    <a href="{{ url_for('dashboard') }}" class="{{ 'on' if request.endpoint == 'dashboard' }}">Alerts</a>
+    <a href="{{ url_for('incidents') }}" class="{{ 'on' if request.endpoint in ('incidents','incident_detail') }}">Incidents</a>
+    <a href="{{ url_for('api_stats') }}">API</a>
+  </nav>
+  <form method="post" action="{{ url_for('analyze') }}"><button class="btn ghost" title="Re-run all correlation rules">↻ Re-analyse</button></form>
+</header>
+<main>{% block body %}{% endblock %}</main>
+<footer>Synthetic data only · rule-based detection requires analyst validation</footer>
+</body>
+</html>

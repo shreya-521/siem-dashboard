@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block body %}
+<section class="kpis">
+  {% for s in severities %}
+  <a class="kpi sev-{{ s|lower }}" href="{{ url_for('dashboard', severity=s) }}">
+    <span class="n">{{ sev_counts[s] }}</span><span class="l">{{ s }}</span></a>
+  {% endfor %}
+  <div class="kpi plain"><span class="n">{{ open_count }}</span><span class="l">Unresolved / {{ total }} total</span></div>
+  <div class="kpi plain"><span class="n">{{ events.values()|sum }}</span>
+    <span class="l">Events · {% for k, v in events.items() %}{{ k }} {{ v }}{{ ' · ' if not loop.last }}{% endfor %}</span></div>
+</section>
+
+<section class="panels">
+  <div class="panel">
+    <h2>Alerts by hour of day</h2>
+    <div class="bars" role="img" aria-label="Alerts per hour">
+      {% for c in hourly %}
+      <div class="col" title="{{ '%02d'|format(loop.index0) }}:00 — {{ c }} alert(s)">
+        <i style="height: {{ (c / max_hourly * 100)|round|int }}%"></i><span>{{ '%02d'|format(loop.index0) if loop.index0 % 3 == 0 }}</span>
+      </div>{% endfor %}
+    </div>
+  </div>
+  <div class="panel">
+    <h2>Detections by rule</h2>
+    <ul class="rules">
+      {% for rule, c in rule_counts.most_common() %}
+      <li><a href="{{ url_for('dashboard', rule=rule) }}">{{ rule_labels.get(rule, rule) }}</a><b>{{ c }}</b></li>
+      {% else %}<li class="muted">No alerts yet. Run <code>python run_demo.py</code>.</li>{% endfor %}
+    </ul>
+  </div>
+</section>
+
+<section class="panel wide">
+  <form class="filters" method="get">
+    <input type="search" name="q" value="{{ f.q }}" placeholder="Search IP, user or title…">
+    <select name="severity"><option value="">All severities</option>
+      {% for s in severities %}<option {{ 'selected' if f.severity == s }}>{{ s }}</option>{% endfor %}</select>
+    <select name="rule"><option value="">All rules</option>
+      {% for r, label in rule_labels.items() %}<option value="{{ r }}" {{ 'selected' if f.rule == r }}>{{ label }}</option>{% endfor %}</select>
+    <select name="status"><option value="">Any status</option>
+      {% for s in ('open', 'investigating', 'resolved') %}<option {{ 'selected' if f.status == s }}>{{ s }}</option>{% endfor %}</select>
+    <button class="btn">Filter</button>
+    <a class="btn ghost" href="{{ url_for('dashboard') }}">Reset</a>
+  </form>
+  <div class="scroll">
+  <table>
+    <thead><tr><th>Severity</th><th>Score</th><th>Detection</th><th>Source IP</th><th>User</th><th>When</th><th>Status</th></tr></thead>
+    <tbody>
+    {% for a in alerts %}
+      <tr>
+        <td><span class="pill sev-{{ a.severity|lower }}">{{ a.severity }}</span></td>
+        <td class="mono">{{ a.score }}</td>
+        <td><a href="{{ url_for('alert_detail', alert_id=a.id) }}">{{ a.title }}</a></td>
+        <td class="mono"><a href="{{ url_for('incident_detail', ip=a.src_ip) }}">{{ a.src_ip }}</a></td>
+        <td class="mono">{{ a.user or '—' }}</td>
+        <td class="mono">{{ a.start_ts.strftime('%d %b %H:%M:%S') }}</td>
+        <td><span class="st st-{{ a.status }}">{{ a.status }}</span></td>
+      </tr>
+    {% else %}<tr><td colspan="7" class="muted">No alerts match these filters.</td></tr>{% endfor %}
+    </tbody>
+  </table></div>
+</section>
+{% endblock %}

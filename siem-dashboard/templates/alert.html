@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Alert {{ a.id }}{% endblock %}
+{% block body %}
+<p class="crumbs"><a href="{{ url_for('dashboard') }}">Alerts</a> / #{{ a.id }}</p>
+<section class="panel wide">
+  <div class="head">
+    <span class="pill sev-{{ a.severity|lower }} big">{{ a.severity }} · {{ a.score }}</span>
+    <h1>{{ a.title }}</h1>
+  </div>
+  <p class="lead">{{ a.description }}</p>
+  <dl class="meta">
+    <div><dt>Source IP</dt><dd class="mono"><a href="{{ url_for('incident_detail', ip=a.src_ip) }}">{{ a.src_ip }}</a></dd></div>
+    <div><dt>User</dt><dd class="mono">{{ a.user or '—' }}</dd></div>
+    <div><dt>Window</dt><dd class="mono">{{ a.start_ts.strftime('%H:%M:%S') }} → {{ a.end_ts.strftime('%H:%M:%S') }}</dd></div>
+    <div><dt>MITRE ATT&amp;CK</dt><dd>{{ a.mitre or '—' }}</dd></div>
+    <div><dt>Status</dt><dd>
+      <form method="post" action="{{ url_for('alert_status', alert_id=a.id) }}" class="inline">
+        <select name="status">{% for s in ('open', 'investigating', 'resolved') %}<option {{ 'selected' if a.status == s }}>{{ s }}</option>{% endfor %}</select>
+        <button class="btn">Update</button></form></dd></div>
+  </dl>
+</section>
+<section class="panel wide">
+  <h2>Supporting evidence ({{ events|length }} events)</h2>
+  <div class="scroll"><table class="logs"><thead><tr><th>Time</th><th>Source</th><th>Raw log line</th></tr></thead><tbody>
+  {% for e in events %}<tr><td class="mono">{{ e.ts.strftime('%H:%M:%S') }}</td><td>{{ e.source }}</td><td class="mono">{{ e.raw }}</td></tr>
+  {% else %}<tr><td colspan="3" class="muted">No linked events.</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

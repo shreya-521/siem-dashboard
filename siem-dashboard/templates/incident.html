@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% block title %}Incident {{ ip }}{% endblock %}
+{% block body %}
+<p class="crumbs"><a href="{{ url_for('incidents') }}">Incidents</a> / {{ ip }}</p>
+<section class="panel wide">
+  <div class="head">
+    <span class="pill sev-{{ severity|lower }} big">{{ severity }} · {{ score }}</span>
+    <h1 class="mono">{{ ip }}</h1>
+    <a class="btn" href="{{ url_for('incident_report', ip=ip) }}">⬇ Download report (.md)</a>
+  </div>
+  <h2>Attack timeline</h2>
+  <ol class="timeline">
+    {% for a in alerts %}
+    <li class="sev-{{ a.severity|lower }}">
+      <time class="mono">{{ a.start_ts.strftime('%H:%M:%S') }}</time>
+      <div><a href="{{ url_for('alert_detail', alert_id=a.id) }}"><b>{{ a.title }}</b></a>
+        <span class="pill sev-{{ a.severity|lower }}">{{ a.severity }}</span> <span class="st st-{{ a.status }}">{{ a.status }}</span>
+        <p>{{ a.description }}</p></div>
+    </li>{% endfor %}
+  </ol>
+</section>
+<section class="panel wide">
+  <h2>All supporting events ({{ events|length }})</h2>
+  <div class="scroll"><table class="logs"><tbody>
+  {% for e in events %}<tr><td class="mono">{{ e.ts.strftime('%H:%M:%S') }}</td><td>{{ e.source }}</td><td class="mono">{{ e.raw }}</td></tr>{% endfor %}
+  </tbody></table></div>
+</section>
+{% endblock %}

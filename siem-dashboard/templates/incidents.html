@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Incidents{% endblock %}
+{% block body %}
+<section class="panel wide">
+  <h2>Incidents <small>alerts grouped by source IP, ranked by highest severity</small></h2>
+  <div class="scroll"><table>
+    <thead><tr><th>Severity</th><th>Source IP</th><th>Alerts</th><th>Detections</th><th>First seen</th><th>Last seen</th><th>Unresolved</th></tr></thead>
+    <tbody>
+    {% for r in rows %}
+      <tr>
+        <td><span class="pill sev-{{ r.severity|lower }}">{{ r.severity }}</span></td>
+        <td class="mono"><a href="{{ url_for('incident_detail', ip=r.ip) }}">{{ r.ip }}</a></td>
+        <td class="mono">{{ r.alerts|length }}</td>
+        <td>{% for rule in r.rules %}<span class="tag">{{ rule_labels.get(rule, rule) }}</span> {% endfor %}</td>
+        <td class="mono">{{ r.first.strftime('%H:%M:%S') }}</td><td class="mono">{{ r.last.strftime('%H:%M:%S') }}</td>
+        <td class="mono">{{ r.open }}</td>
+      </tr>
+    {% else %}<tr><td colspan="7" class="muted">No incidents.</td></tr>{% endfor %}
+    </tbody></table></div>
+</section>
+{% endblock %}
