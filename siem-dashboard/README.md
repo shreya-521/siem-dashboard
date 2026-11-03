@@ -140,6 +140,4 @@ Screenshots are in `docs/screenshots/`; a generated example is in `docs/sample_i
 Real-time log tailing, GeoIP/threat-intel enrichment, rule configuration via UI, ML-based
 baseline anomaly scoring, authentication, and OpenSearch/Wazuh connectors.
 
-## Contribution
 
-Replace this section with your name and a short note on what you built, tested and documented.
